@@ -189,6 +189,7 @@ function setGameTimer() {
             } else {
                 alertStr += "Your high score is " + score + ".";
             }
+            alert(alertStr);
             gameTimedOut();
         }
         curTime++;
