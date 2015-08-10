@@ -177,7 +177,18 @@ function setGameTimer() {
         document.getElementById("timeVal").textContent = cVal;
         if (cVal === 0) {
             clearInterval(gInt);
-            alert("Game over! Your score was " + score + ".");
+            var highScore = getHighScore();
+            var isHigher = false;
+            if (score > highScore) {
+                isHigher = true;
+                setHighScore();
+            }
+            var alertStr = "Game over! Your score was " + score + ". ";
+            if (isHigher) {
+                alertStr += "You have a new high score of " + score + ".";
+            } else {
+                alertStr += "Your high score is " + score + ".";
+            }
             gameTimedOut();
         }
         curTime++;
@@ -193,9 +204,22 @@ function gameTimedOut() {
 function resetVals() {
     score = 0;
     document.getElementById("scoreVal").textContent = 0;
+    document.getElementById("timeVal").textContent = 30;
     intervalTime = 3000;
     first = true;
     holeInd = null;
+}
+
+function getHighScore() {
+    if (localStorage.getItem("highScore")) {
+        return localStorage.getItem("highScore");
+    } else {
+        return 0;
+    }
+}
+
+function setHighScore() {
+    localStorage.setItem("highScore", score)
 }
 
 window.addEventListener("load", setUp, false);
