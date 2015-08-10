@@ -1,0 +1,49 @@
+#head {
+  text-align: center;
+  clear: right;
+}
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+}
+#score {
+  text-align: center;
+  position: absolute;
+  right: 50px;
+  top: 25px;
+}
+.hole {
+  background-image: url("Images/hole.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 50px;
+  display: inline;
+}
+.filler {
+  width: 60px;
+  position: absolute;
+}
+#rowOne, #rowTwo, #rowThree {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: block;
+}
+#rowOne, #rowTwo {
+  padding-bottom: 50px;
+}
+.placeholder {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+}
+#timer {
+  text-align: center;
+  position: absolute;
+  left: 50px;
+  top: 25px;
+}
+#ex {
+  width: 50px;
+  display: inline;
+}
