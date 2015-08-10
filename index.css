@@ -1,0 +1,42 @@
+body {
+	margin:0px;
+	background-color: #D3D3D3;
+}
+#contents {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+}
+#username {
+	border-radius: 2px;
+	border:1px solid gray;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size:14pt;
+  	width: 500px;
+  	height: 20px;
+  	padding: 10px 0;
+}
+#thebutton {
+	margin-right: 10px;
+	font-size: 12pt;
+	font-family: 'Source Sans Pro', sans-serif;
+	border:0;
+	background-color:rgb(150,255,46);
+	text-decoration: none;
+	color:white;
+	border-radius: 5px;
+	padding:6px;
+    height:45px;
+    width:100px;
+}
+#thebutton:hover {
+	cursor:pointer;
+}
+h1 {
+	text-align: center;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 40pt;
+}
+footer {
+	font-size: 10pt;
+}
