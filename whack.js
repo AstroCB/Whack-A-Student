@@ -187,7 +187,7 @@ function setGameTimer() {
             if (isHigher) {
                 alertStr += "You have a new high score of " + score + ".";
             } else {
-                alertStr += "Your high score is " + score + ".";
+                alertStr += "Your high score is " + localStorage.getItem("highScore") + ".";
             }
             alert(alertStr);
             gameTimedOut();
