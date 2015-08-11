@@ -26,7 +26,8 @@ var imgs = [{
     intervalTime = 3000,
     score = 0,
     first = true,
-    holeInd = null;
+    holeInd = null,
+    waitingForRestart = false;
 
 function setUp() {
     loadImgs();
@@ -38,10 +39,12 @@ function loadImgs() {
     for (var i = 0; i < imgs.length; i++) {
         var imgL = new Image(imgs[i].src);
     }
+    var cursor = new Image("hammer.png"),
+        clickCursor = new Image("hammerDown.png");
 }
 
 function randImg() {
-    var randStu = imgs[Math.floor(Math.random() * 6)];
+    var randStu = imgs[Math.floor(Math.random() * 7)];
     holeInd = Math.floor(Math.random() * 9);
     document.getElementsByClassName("filler")[holeInd].setAttribute("src", randStu.src);
     document.getElementById("head").textContent = "Whack the " + randStu.name + " Student!";
@@ -103,6 +106,12 @@ function mDown(e) {
     if (first) {
         setGameTimer();
         first = false;
+    }
+
+    if (waitingForRestart) {
+        fadeOut(document.getElementById("alert"));
+        document.getElementById("overlay").setAttribute("hidden", "hidden");
+        waitingForRestart = false;
     }
     html.style.cursor = "url('Images/hammerDown.png'), pointer";
 
@@ -179,17 +188,25 @@ function setGameTimer() {
             clearInterval(gInt);
             var highScore = getHighScore();
             var isHigher = false;
-            if (score > highScore) {
+            if (highScore && score > highScore) {
                 isHigher = true;
                 setHighScore();
             }
-            var alertStr = "Game over! Your score was " + score + ". ";
+            var alertStr = "Game over!<br/><br/><br/>Your score was " + score;
             if (isHigher) {
-                alertStr += "You have a new high score of " + score + ".";
+                alertStr += " and you have a new high score of " + score + ".";
             } else {
-                alertStr += "Your high score is " + localStorage.getItem("highScore") + ".";
+                if (localStorage.getItem("highScore")) {
+                    alertStr += " and your high score is " + localStorage.getItem("highScore") + ".";
+                } else {
+                    alertStr += ".";
+                }
             }
-            alert(alertStr);
+            document.getElementById("alertText").innerHTML = alertStr;
+            document.getElementById("overlay").removeAttribute("hidden");
+            fadeIn(document.getElementById("alert"));
+            waitingForRestart = true;
+
             gameTimedOut();
         }
         curTime++;
@@ -214,13 +231,38 @@ function resetVals() {
 function getHighScore() {
     if (localStorage.getItem("highScore")) {
         return localStorage.getItem("highScore");
-    } else {
-        return 0;
     }
+    return null;
 }
 
 function setHighScore() {
-    localStorage.setItem("highScore", score)
+    localStorage.setItem("highScore", score);
+}
+
+function fadeIn(elem) {    
+    var opac = 0.1;
+    elem.style.visibility = "visible";
+    var fadeTimer = setInterval(function() {
+        if (opac >= 1) {
+            clearInterval(fadeTimer);
+        }
+        elem.style.opacity = opac;
+        elem.style.filter = 'alpha(opacity=' + opac * 100 + ")";
+        opac += opac * 0.1;
+    }, 10);
+}
+
+function fadeOut(elem) {
+    var opac = 1;
+    var fadeTimer = setInterval(function() {
+        if (opac < 0.1) {
+            elem.style.visibility = "hidden";
+            clearInterval(fadeTimer);
+        }
+        elem.style.opacity = opac;
+        elem.style.filter = 'alpha(opacity=' + opac * 100 + ")";
+        opac -= opac * 0.1;
+    }, 10);
 }
 
 window.addEventListener("load", setUp, false);
