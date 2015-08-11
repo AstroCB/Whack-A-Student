@@ -23,7 +23,7 @@ var imgs = [{
     html = document.getElementsByTagName("html")[0],
     currentSrc = "",
     globalTimer,
-    intervalTime = 3000,
+    intervalTime = 2500,
     score = 0,
     first = true,
     holeInd = null,
