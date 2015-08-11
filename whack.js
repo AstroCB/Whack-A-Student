@@ -23,7 +23,7 @@ var imgs = [{
     html = document.getElementsByTagName("html")[0],
     currentSrc = "",
     globalTimer,
-    intervalTime = 2500,
+    intervalTime = 3000,
     score = 0,
     first = true,
     holeInd = null,
@@ -195,12 +195,7 @@ function setGameTimer() {
             clearInterval(gInt);
             var highScore = getHighScore();
             var isHigher = false;
-
-            // Slightly redundant, but safe
             if (highScore && score > highScore) {
-                isHigher = true;
-                setHighScore();
-            } else if (!highScore) {
                 isHigher = true;
                 setHighScore();
             }
