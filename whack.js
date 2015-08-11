@@ -202,7 +202,6 @@ function setGameTimer() {
                 setHighScore();
             } else if (!highScore) {
                 isHigher = true;
-                console.log(score);
                 setHighScore();
             }
             var alertStr = "Game over!<br/><br/><br/>Your score was " + score;
