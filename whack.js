@@ -59,6 +59,7 @@ function randImg() {
 }
 
 function addMore() {
+    // Seems a bit repetitive, but likely necessary to maintain array structure & passing b/t function calls
     var except = [];
     var rand1 = getRand(except);
     except.push(rand1);
@@ -108,11 +109,6 @@ function mDown(e) {
         first = false;
     }
 
-    if (waitingForRestart) {
-        fadeOut(document.getElementById("alert"));
-        document.getElementById("overlay").setAttribute("hidden", "hidden");
-        waitingForRestart = false;
-    }
     html.style.cursor = "url('Images/hammerDown.png'), pointer";
 
     var x = e.clientX + 25,
@@ -120,13 +116,24 @@ function mDown(e) {
 
     var target = document.elementFromPoint(x, y);
 
-    if (target.getAttribute("src") === currentSrc) {
+    // Check for ID to make sure that it isn't the example image
+    if (target.getAttribute("src") === currentSrc && !target.getAttribute("id")) {
         // Whack successful
         changePoints(true);
     } else {
         // Missed
-        changePoints(false);
+        if (!waitingForRestart) {
+            // Don't count the mousedown from the ending screen
+            changePoints(false);
+        }
     }
+
+    if (waitingForRestart) {
+        fadeOut(document.getElementById("alert"));
+        document.getElementById("overlay").setAttribute("hidden", "hidden");
+        waitingForRestart = false;
+    }
+
     resetBoard();
     setTimer();
 }
@@ -194,7 +201,7 @@ function setGameTimer() {
             }
             var alertStr = "Game over!<br/><br/><br/>Your score was " + score;
             if (isHigher) {
-                alertStr += " and you have a new high score of " + score + ".";
+                alertStr += ", which is your new high score.";
             } else {
                 if (localStorage.getItem("highScore")) {
                     alertStr += " and your high score is " + localStorage.getItem("highScore") + ".";
