@@ -195,7 +195,12 @@ function setGameTimer() {
             clearInterval(gInt);
             var highScore = getHighScore();
             var isHigher = false;
+
+            // Slightly redundant, but safe
             if (highScore && score > highScore) {
+                isHigher = true;
+                setHighScore();
+            } else if (!highScore) {
                 isHigher = true;
                 setHighScore();
             }
